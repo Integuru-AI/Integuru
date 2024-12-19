@@ -103,7 +103,7 @@ poetry run pytest
 This repository includes a CI workflow using GitHub Actions. The workflow is defined in the `.github/workflows/ci.yml` file and is triggered on each push and pull request to the `main` branch. The workflow performs the following steps:
 
 1. Checks out the code.
-2. Sets up Python 3.12.
+2. Sets up Python 3.13.
 3. Installs dependencies using `poetry`.
 4. Runs tests using `pytest`.
 

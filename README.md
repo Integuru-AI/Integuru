@@ -40,7 +40,9 @@ Let's assume we want to download utility bills:
 
 ## Setup
 
-1. Set up your OpenAI [API Keys](https://platform.openai.com/account/api-keys) and add the `OPENAI_API_KEY` environment variable. (We recommend using an account with access to models that are at least as capable as OpenAI o1-mini. Models on par with OpenAI o1-preview are ideal.)
+1. **For OpenAI models**: Set up your OpenAI [API Keys](https://platform.openai.com/account/api-keys) and add the `OPENAI_API_KEY` environment variable. (We recommend using an account with access to models that are at least as capable as OpenAI o1-mini. Models on par with OpenAI o1-preview are ideal.)
+
+   **For Ollama models**: Install and run [Ollama](https://ollama.com/download), then pull a compatible model (e.g., `ollama pull llama3.1`).
 2. Install Python requirements via poetry:
    ```
    poetry install
@@ -60,11 +62,13 @@ Let's assume we want to download utility bills:
    Log into your platform and perform the desired action (such as downloading a utility bill).
 6. Run Integuru:
    ```
-   poetry run integuru --prompt "download utility bills" --model <gpt-4o|o3-mini|o1|o1-mini>
+   poetry run integuru --prompt "download utility bills" --model <gpt-4o|o3-mini|o1|o1-mini|ollama>
    ```
    You can also run it via Jupyter Notebook `main.ipynb`
 
-   **Recommended to use gpt-4o as the model for graph generation as it supports function calling. Integuru will automatically switch to o1-preview for code generation if available in the user's OpenAI account.** 
+   **Recommended to use gpt-4o as the model for graph generation as it supports function calling. Integuru will automatically switch to o1-preview for code generation if available in the user's OpenAI account.** ⚠️ **Note: o1-preview does not support function calls.**
+
+   **Ollama support is now available! You can use the Ollama model by specifying `--model ollama` in the command.**
 
 ## Usage
 
@@ -75,7 +79,7 @@ poetry run integuru --help
 Usage: integuru [OPTIONS]
 
 Options:
-  --model TEXT                    The LLM model to use (default is gpt-4o)
+  --model TEXT                    The LLM model to use (default is gpt-4o, supports ollama)
   --prompt TEXT                   The prompt for the model  [required]
   --har-path TEXT                 The HAR file path (default is
                                   ./network_requests.har)
@@ -132,7 +136,7 @@ We open-source unofficial APIs that we've built already. You can find them [here
 Collected data is stored locally in the `network_requests.har` and `cookies.json` files.
 
 ### LLM Usage
-The tool uses a cloud-based LLM (OpenAI's GPT-4o and o1-preview models).
+The tool uses either cloud-based LLMs (OpenAI's GPT-4o and o1-preview models) or local LLMs (via Ollama).
 
 ### LLM Training
 The LLM is not trained or improved by the usage of this tool.

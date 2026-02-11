@@ -22,7 +22,7 @@ urllib3 = "^2.3.0"
 h11 = "^0.14.0"
 requests = "^2.32.3"
 orjson = "^3.10.14"
-fonttools = "^4.55.3"
+fonttools = "^4.60.2"
 
 [tool.poetry.scripts]
 integuru = "integuru.__main__:cli"

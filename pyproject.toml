@@ -20,7 +20,7 @@ matplotlib = "^3.9.2"
 ipykernel = "^6.29.5"
 urllib3 = "^2.3.0"
 h11 = "^0.14.0"
-requests = "^2.32.3"
+requests = "^2.32.4"
 orjson = "^3.10.14"
 fonttools = "^4.55.3"
 

@@ -38,9 +38,22 @@ Let's assume we want to download utility bills:
 - Allow input variables (for example, choosing the YEAR to download a document from). This is currently only supported for graph generation. Input variables for code generation coming soon!
 - Generate code to hit all requests in the graph to perform the desired action.
 
+## Supported LLM Providers
+
+| Provider | Models | API Key Env Var |
+|----------|--------|-----------------|
+| **OpenAI** (default) | `gpt-4o`, `o1-preview`, etc. | `OPENAI_API_KEY` |
+| **[MiniMax](https://www.minimax.io)** | `MiniMax-M2.7`, `MiniMax-M2.7-highspeed` | `MINIMAX_API_KEY` |
+
+The provider is auto-detected from available API keys, or can be set explicitly with `--llm-provider`.
+
 ## Setup
 
-1. Set up your OpenAI [API Keys](https://platform.openai.com/account/api-keys) and add the `OPENAI_API_KEY` environment variable. (We recommend using an account with access to models that are at least as capable as OpenAI o1-mini. Models on par with OpenAI o1-preview are ideal.)
+1. Set up your LLM API key:
+   - **OpenAI**: Set up your [API Keys](https://platform.openai.com/account/api-keys) and add the `OPENAI_API_KEY` environment variable.
+   - **MiniMax**: Get an API key from [MiniMax Platform](https://platform.minimax.io) and set the `MINIMAX_API_KEY` environment variable.
+
+   (We recommend using models at least as capable as OpenAI o1-mini. MiniMax-M2.7 is a great alternative with competitive performance.)
 2. Install Python requirements via poetry:
    ```
    poetry install
@@ -60,11 +73,15 @@ Let's assume we want to download utility bills:
    Log into your platform and perform the desired action (such as downloading a utility bill).
 6. Run Integuru:
    ```
+   # Using OpenAI (default)
    poetry run integuru --prompt "download utility bills" --model <gpt-4o|o3-mini|o1|o1-mini>
+
+   # Using MiniMax
+   poetry run integuru --prompt "download utility bills" --llm-provider minimax
    ```
    You can also run it via Jupyter Notebook `main.ipynb`
 
-   **Recommended to use gpt-4o as the model for graph generation as it supports function calling. Integuru will automatically switch to o1-preview for code generation if available in the user's OpenAI account.** 
+   **Recommended to use gpt-4o (OpenAI) or MiniMax-M2.7 (MiniMax) as the model for graph generation as they support function calling. Integuru will automatically switch to the alternate model for code generation.**
 
 ## Usage
 
@@ -75,7 +92,8 @@ poetry run integuru --help
 Usage: integuru [OPTIONS]
 
 Options:
-  --model TEXT                    The LLM model to use (default is gpt-4o)
+  --model TEXT                    The LLM model to use (default depends on
+                                  provider)
   --prompt TEXT                   The prompt for the model  [required]
   --har-path TEXT                 The HAR file path (default is
                                   ./network_requests.har)
@@ -86,6 +104,8 @@ Options:
                                   Input variables in the format key value
   --generate-code                 Whether to generate the full integration
                                   code
+  --llm-provider [openai|minimax] LLM provider to use (auto-detected from
+                                  API keys if not set)
   --help                          Show this message and exit.
 ```
 
@@ -132,7 +152,7 @@ We open-source unofficial APIs that we've built already. You can find them [here
 Collected data is stored locally in the `network_requests.har` and `cookies.json` files.
 
 ### LLM Usage
-The tool uses a cloud-based LLM (OpenAI's GPT-4o and o1-preview models).
+The tool uses a cloud-based LLM. Supported providers: OpenAI (GPT-4o, o1-preview) and [MiniMax](https://www.minimax.io) (MiniMax-M2.7, MiniMax-M2.7-highspeed).
 
 ### LLM Training
 The LLM is not trained or improved by the usage of this tool.

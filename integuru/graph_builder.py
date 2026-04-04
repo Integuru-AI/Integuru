@@ -8,13 +8,14 @@ def check_end_condition(state, agent, to_generate_code):
     agent.dag_manager.detect_cycles()
 
     if len(state.get("to_be_processed_nodes", [])) == 0:
+        print("------------------------Successfully analyzed!!!-------------------------------", flush=True)
         print_dag(agent.dag_manager.graph, agent.global_master_node_id)
         visualize_dag(agent.dag_manager.graph)
-        print("------------------------Successfully analyzed!!!-------------------------------", flush=True)
         print_dag_in_reverse(agent.dag_manager.graph, to_generate_code=to_generate_code)
         return "end"
     else:
         print("Continuing execution", flush=True)
+        print(f"Generated graph at current step: {print_dag(agent.dag_manager.graph, agent.global_master_node_id)}", flush=True)
         return "continue"
 
 

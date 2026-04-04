@@ -21,6 +21,7 @@ async def open_browser_and_wait():
 
         input("Press Enter to continue and close the browser...")
 
+        # Ensure 2FA is completed before saving cookies
         cookies = await context.cookies()
 
         with open("cookies.json", "w") as f:

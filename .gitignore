@@ -158,5 +158,7 @@ cython_debug/
 # Temporary files
 temp*
 
+generated_code.txt
+generated_code.py
 
 saved_files/

@@ -64,5 +64,3 @@ class DAGManager:
             attrs = self.graph.nodes[node_id]
             nodes_info.append(f"{node_id}: {attrs}")
         return "\n".join(nodes_info)
-
-

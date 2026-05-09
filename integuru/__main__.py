@@ -9,7 +9,7 @@ import click
 
 @click.command()
 @click.option(
-    "--model", default="gpt-4o", help="The LLM model to use (default is gpt-4o)"
+    "--model", default=None, help="The LLM model to use (default depends on provider)"
 )
 @click.option("--prompt", required=True, help="The prompt for the model")
 @click.option(
@@ -37,8 +37,14 @@ import click
     default=False,
     help="Whether to generate the full integration code",
 )
+@click.option(
+    "--llm-provider",
+    default=None,
+    type=click.Choice(["openai", "minimax"], case_sensitive=False),
+    help="LLM provider to use (auto-detected from API keys if not set)",
+)
 def cli(
-    model, prompt, har_path, cookie_path, max_steps, input_variables, generate_code
+    model, prompt, har_path, cookie_path, max_steps, input_variables, generate_code, llm_provider
 ):
     input_vars = dict(input_variables)
     asyncio.run(
@@ -50,6 +56,7 @@ def cli(
             input_variables=input_vars,
             max_steps=max_steps,
             to_generate_code=generate_code,
+            llm_provider=llm_provider,
         )
     )
 

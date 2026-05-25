@@ -1,6 +1,8 @@
 # Integuru v0
 
-First version of the AI agent that generates integration code by reverse-engineering platforms' internal APIs.
+This repo contains the earliest version of the Integuru agent we released publicly. It shows the original approach: using browser network requests to generate runnable integration code for platforms without official APIs.
+
+We've kept building since then. The newest version of Integuru is available at [www.integuru.com](https://www.integuru.com).
 
 ## Integuru v0 in Action
 
@@ -122,9 +124,9 @@ Contributions to improve Integuru are welcome. Please feel free to submit issues
 
 ## Info
 
-Integuru is built by Integuru.ai. Besides our work on the agent, we take custom requests for new integrations or additional features for existing supported platforms. We also offer hosting and authentication services. If you have requests or want to work with us, reach out at richard@integuru.ai.
+Integuru is now at [Integuru.com](https://www.integuru.com). If you're looking for new integrations or the current version of the agent, visit [www.integuru.com](https://www.integuru.com).
 
-We open-source unofficial APIs that we've built already. You can find them [here](https://github.com/Integuru-AI/APIs-by-Integuru).
+For direct questions, reach out at richard@integuru.com.
 
 ## Privacy Policy
 

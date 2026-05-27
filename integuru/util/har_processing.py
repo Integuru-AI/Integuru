@@ -45,13 +45,11 @@ def format_request(har_request: Dict[str, Any]) -> Request:
     method = har_request.get("method", "GET")
     url = har_request.get("url", "")
 
-    # Store headers as a dictionary, excluding headers containing excluded keywords
-    headers = {
-        header.get("name", ""): header.get("value", "")
-        for header in har_request.get("headers", [])
-        if not any(keyword.lower() in header.get("name", "").lower() 
-                  for keyword in excluded_header_keywords)
-    }
+    headers = {}
+    for header in har_request.get("headers", []):
+        header_name = header.get("name", "")
+        if not any(keyword in header_name.lower() for keyword in excluded_header_keywords):
+            headers[header_name] = header.get("value", "")
 
     query_params_list = har_request.get("queryString", [])
     query_params = {param["name"]: param["value"] for param in query_params_list} if query_params_list else None
@@ -59,20 +57,18 @@ def format_request(har_request: Dict[str, Any]) -> Request:
     post_data = har_request.get("postData", {})
     body = post_data.get("text") if post_data else None
 
-    # Try to parse body as JSON if Content-Type is application/json
     if body:
-        headers_lower = {k.lower(): v for k, v in headers.items()}
-        content_type = headers_lower.get('content-type')
+        content_type = headers.get('Content-Type') or headers.get('content-type')
         if content_type and 'application/json' in content_type.lower():
             try:
                 body = json.loads(body)
             except json.JSONDecodeError:
-                pass  # Keep body as is if not valid JSON
+                pass
 
     return Request(
         method=method,
         url=url,
-        headers=headers, 
+        headers=headers,
         query_params=query_params,
         body=body
     )
@@ -114,19 +110,12 @@ def parse_har_file(har_file_path: str) -> Dict[Request, Dict[str, str]]:
 
 def build_url_to_req_res_map(req_res_dict: Dict[Request, Dict[str, str]]) -> Dict[str, Dict[str, Any]]:
     """
-    Builds a dictionary mapping URLs to {'request': formatted_request, 'response': response_dict}
+    Builds a dictionary mapping URLs to {'request': request, 'response': response_dict}
     """
-    url_to_req_res_dict = {}
-
-    for request, response in req_res_dict.items():
-        url = request.url
-        # If multiple requests to the same URL, you can choose to overwrite or store all
-        url_to_req_res_dict[url] = {
-            'request': request,
-            'response': response
-        }
-
-    return url_to_req_res_dict
+    return {
+        request.url: {'request': request, 'response': response}
+        for request, response in req_res_dict.items()
+    }
 
 
 def get_har_urls(har_file_path: str) -> List[Tuple[str, str, str, str]]:

@@ -1,0 +1,29 @@
+spec_version: "0.1.0"
+name: integuru
+version: 1.0.0
+description: >
+  Integuru is an AI agent that builds permissionless integrations by reverse-engineering
+  platforms' internal APIs. It captures browser network requests (via HAR files), constructs
+  a dependency graph of dynamic API calls, and generates runnable Python code to automate
+  any platform action — even without an official API. Ideal for RPA, data extraction, and
+  workflow automation against platforms that lack public APIs.
+license: AGPL-3.0
+model:
+  preferred: openai:gpt-4o
+  fallback: openai:o1-preview
+skills:
+  - name: har-analysis
+    description: Parse and analyse browser HAR files to extract network request/response pairs
+  - name: dependency-graph
+    description: Build a directed acyclic graph (DAG) of request dependencies using LLM reasoning
+  - name: code-generation
+    description: Generate runnable Python integration code that traverses the dependency graph and reproduces the target action
+  - name: dynamic-part-identification
+    description: Identify dynamic tokens, session IDs, and input variables inside cURL commands
+runtime:
+  max_turns: 20
+  entrypoint: "poetry run integuru"
+compliance:
+  risk_tier: standard
+  supervision:
+    human_in_the_loop: destructive

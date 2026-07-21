@@ -234,7 +234,7 @@ class IntegrationAgent:
             master_node_id = self.curl_to_id_dict[curl]
         else:
             master_node_id = self.dag_manager.add_node(
-                node_type="master_curl",  # Specify node type
+                node_type="master",  # Specify node type
                 content={
                     "key": request,
                     "value": self.req_to_res_map[request]
@@ -376,7 +376,7 @@ class IntegrationAgent:
                         continue    
 
                     curl_node_id = self.dag_manager.add_node(
-                        node_type="curl",  # Specify node type
+                        node_type="cURL",  # Specify node type
                     content={
                         "key": simplest_request,
                         "value": self.req_to_res_map[simplest_request]

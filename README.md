@@ -43,7 +43,7 @@ Let's assume we want to download utility bills:
 | Provider | Models | API Key Env Var |
 |----------|--------|-----------------|
 | **OpenAI** (default) | `gpt-4o`, `o1-preview`, etc. | `OPENAI_API_KEY` |
-| **[MiniMax](https://www.minimax.io)** | `MiniMax-M2.7`, `MiniMax-M2.7-highspeed` | `MINIMAX_API_KEY` |
+| **[MiniMax](https://www.minimax.io)** | `MiniMax-M3`, `MiniMax-M2.7` | `MINIMAX_API_KEY` |
 
 The provider is auto-detected from available API keys, or can be set explicitly with `--llm-provider`.
 
@@ -53,7 +53,7 @@ The provider is auto-detected from available API keys, or can be set explicitly 
    - **OpenAI**: Set up your [API Keys](https://platform.openai.com/account/api-keys) and add the `OPENAI_API_KEY` environment variable.
    - **MiniMax**: Get an API key from [MiniMax Platform](https://platform.minimax.io) and set the `MINIMAX_API_KEY` environment variable.
 
-   (We recommend using models at least as capable as OpenAI o1-mini. MiniMax-M2.7 is a great alternative with competitive performance.)
+   (We recommend using models at least as capable as OpenAI o1-mini. MiniMax-M3 is a great alternative with competitive performance.)
 2. Install Python requirements via poetry:
    ```
    poetry install
@@ -81,7 +81,7 @@ The provider is auto-detected from available API keys, or can be set explicitly 
    ```
    You can also run it via Jupyter Notebook `main.ipynb`
 
-   **Recommended to use gpt-4o (OpenAI) or MiniMax-M2.7 (MiniMax) as the model for graph generation as they support function calling. Integuru will automatically switch to the alternate model for code generation.**
+   **Recommended to use gpt-4o (OpenAI) or MiniMax-M3 (MiniMax) as the model for graph generation as they support function calling. Integuru will automatically switch to the alternate model for code generation.**
 
 ## Usage
 
@@ -152,7 +152,7 @@ We open-source unofficial APIs that we've built already. You can find them [here
 Collected data is stored locally in the `network_requests.har` and `cookies.json` files.
 
 ### LLM Usage
-The tool uses a cloud-based LLM. Supported providers: OpenAI (GPT-4o, o1-preview) and [MiniMax](https://www.minimax.io) (MiniMax-M2.7, MiniMax-M2.7-highspeed).
+The tool uses a cloud-based LLM. Supported providers: OpenAI (GPT-4o, o1-preview) and [MiniMax](https://www.minimax.io) (MiniMax-M3, MiniMax-M2.7).
 
 ### LLM Training
 The LLM is not trained or improved by the usage of this tool.

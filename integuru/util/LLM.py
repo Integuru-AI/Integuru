@@ -14,8 +14,8 @@ PROVIDER_PRESETS = {
         "base_url": None,
     },
     "minimax": {
-        "default_model": "MiniMax-M2.7",
-        "alternate_model": "MiniMax-M2.7-highspeed",
+        "default_model": "MiniMax-M3",
+        "alternate_model": "MiniMax-M2.7",
         "api_key_env": "MINIMAX_API_KEY",
         "base_url": "https://api.minimax.io/v1",
     },

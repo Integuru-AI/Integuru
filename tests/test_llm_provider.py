@@ -18,8 +18,8 @@ class TestProviderPresets(unittest.TestCase):
 
     def test_minimax_preset_values(self):
         p = PROVIDER_PRESETS["minimax"]
-        self.assertEqual(p["default_model"], "MiniMax-M2.7")
-        self.assertEqual(p["alternate_model"], "MiniMax-M2.7-highspeed")
+        self.assertEqual(p["default_model"], "MiniMax-M3")
+        self.assertEqual(p["alternate_model"], "MiniMax-M2.7")
         self.assertEqual(p["api_key_env"], "MINIMAX_API_KEY")
         self.assertEqual(p["base_url"], "https://api.minimax.io/v1")
 
@@ -68,8 +68,8 @@ class TestLLMSingletonProvider(unittest.TestCase):
     def test_set_provider_minimax(self):
         LLMSingleton.set_provider("minimax")
         self.assertEqual(LLMSingleton._provider, "minimax")
-        self.assertEqual(LLMSingleton._default_model, "MiniMax-M2.7")
-        self.assertEqual(LLMSingleton._alternate_model, "MiniMax-M2.7-highspeed")
+        self.assertEqual(LLMSingleton._default_model, "MiniMax-M3")
+        self.assertEqual(LLMSingleton._alternate_model, "MiniMax-M2.7")
         self.assertIsNone(LLMSingleton._instance)
 
     def test_set_provider_openai(self):
@@ -90,7 +90,7 @@ class TestLLMSingletonProvider(unittest.TestCase):
         LLMSingleton.get_instance()
         mock_chat.assert_called_once()
         call_kwargs = mock_chat.call_args[1]
-        self.assertEqual(call_kwargs["model"], "MiniMax-M2.7")
+        self.assertEqual(call_kwargs["model"], "MiniMax-M3")
         self.assertEqual(call_kwargs["base_url"], "https://api.minimax.io/v1")
         self.assertEqual(call_kwargs["api_key"], "test-key")
         self.assertEqual(call_kwargs["temperature"], 1)
@@ -110,7 +110,7 @@ class TestLLMSingletonProvider(unittest.TestCase):
         LLMSingleton.set_provider("minimax")
         LLMSingleton.switch_to_alternate_model()
         call_kwargs = mock_chat.call_args[1]
-        self.assertEqual(call_kwargs["model"], "MiniMax-M2.7-highspeed")
+        self.assertEqual(call_kwargs["model"], "MiniMax-M2.7")
         self.assertEqual(call_kwargs["base_url"], "https://api.minimax.io/v1")
 
     @patch("integuru.util.LLM.ChatOpenAI")

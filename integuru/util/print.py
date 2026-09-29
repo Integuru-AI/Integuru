@@ -172,15 +172,35 @@ def generate_code(node_id: str, graph: nx.DiGraph) -> str:
             key_path = find_json_path(json.loads(response_text), extracted_part)
             key_paths.append(key_path)
 
-        parse_response_prompt = f"""
-            Response:
-            {response_text}
+        # Large JSON API responses (bulk data dumps, paginated listings, etc.)
+        # can easily be hundreds of KB. Embedding them in full blows past the
+        # model's context window (see issue #30). The HTML/JS branch above
+        # already guards against this; mirror the same threshold here. The
+        # key_paths computed above already pinpoint exactly where each
+        # variable lives in the parsed JSON, so they're sufficient on their
+        # own to write the extraction code without the raw response text.
+        if len(response_text) > 100000:
+            parse_response_prompt = f"""
+                The JSON response is too large to include in full ({len(response_text)} characters).
 
-            Parse out the following variables from the response using JSON keys:
-            {key_paths}
+                Each variable to extract has already been located in the parsed JSON as a key path
+                (the sequence of keys/indices from the root of the response to reach that value):
+                {key_paths}
 
-            Through your judgement from analyzing the response, if polling is required to retrieve the variables above from the response. If so, implement polling else dont.
-        """
+                Parse out these variables by navigating the parsed JSON response using the key paths above.
+
+                Through your judgement from analyzing the key paths, if polling is required to retrieve the variables above from the response. If so, implement polling else dont.
+            """
+        else:
+            parse_response_prompt = f"""
+                Response:
+                {response_text}
+
+                Parse out the following variables from the response using JSON keys:
+                {key_paths}
+
+                Through your judgement from analyzing the response, if polling is required to retrieve the variables above from the response. If so, implement polling else dont.
+            """
 
     if "text/html" in response_type or "application/javascript" in response_type:
         if len(response_text) > 100000:
